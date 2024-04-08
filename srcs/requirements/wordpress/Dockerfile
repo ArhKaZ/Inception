@@ -12,7 +12,8 @@ COPY conf/www.conf /etc/php82/php-fpm.d/www.conf
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
-COPY conf/auto_config.sh /tmp/auto_config.sh
+COPY conf/auto_config.sh /auto_config.sh
+RUN chmod +x /auto_config.sh
 RUN mkdir -p /run/php 
-ENTRYPOINT [ "/tmp/auto_config.sh" ]
-RUN /usr/sbin/php-fpm8.3 -F
+ENTRYPOINT [ "/auto_config.sh" ]
+CMD ["/usr/sbin/php-fpm8.3", "-F"]

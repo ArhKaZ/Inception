@@ -58,14 +58,14 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/sylvain/data_inception/wordpress'
+      device: '/home/syluiset/data_inception/wordpress'
 
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/sylvain/data_inception/mariadb'
+      device: '/home/syluiset/data_inception/mariadb'
 
 networks:
   inception:
