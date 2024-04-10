@@ -1,19 +1,14 @@
-#!/bin/sh
-# service mysql start;
-# mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
-# mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
-# mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';" 
-# mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_ROOT_PASSWORD}';"
-# mysql -u root -p$SQL_ROOT_PASSWORD -e "FLUSH PRIVILEGES;"
-# mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
-# exec mysqld_safe
+#!/bin/bash
 
-service mysql start;
-mysql -e "CREATE DATABASE IF NOT EXISTS wd;"
-mysql -e "CREATE USER IF NOT EXISTS 'syluiset'@'localhost' IDENTIFIED BY 'cc';"
-mysql -e "GRANT ALL PRIVILEGES ON wd.* TO 'syluiset'@'%' IDENTIFIED BY 'cc';" 
-mysql -e "FLUSH PRIVILEGES;"
-# mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123');"
-# mysql -uroot -p'123' -e "FLUSH PRIVILEGES;"
-mysqladmin -u root shutdown
-exec mysqld_safe
+service mysql start
+echo "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;" > db.sql
+echo "CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_PASSWORD';" >> db.sql
+echo "GRANT ALL PRIVILEGES ON mariadb.* TO '$SQL_USER'@'%';" >> db.sql
+echo "ALTER USER root@localhost IDENTIFIED BY '$SQL_ROOT_PASSWORD';" >> db.sql
+echo "FLUSH PRIVILEGES;" >> db.sql
+
+mysql < db.sql
+
+kill $(cat /var/run/mysqld/mysqld.pid)
+
+mysqld

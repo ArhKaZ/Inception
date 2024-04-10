@@ -16,4 +16,4 @@ COPY conf/auto_config.sh /auto_config.sh
 RUN chmod +x /auto_config.sh
 RUN mkdir -p /run/php 
 ENTRYPOINT [ "/auto_config.sh" ]
-CMD ["/usr/sbin/php-fpm8.3", "-F"]
+CMD ["/usr/sbin/php-fpm8.3", "-F", "--allow-root"]
