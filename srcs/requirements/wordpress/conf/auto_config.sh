@@ -22,6 +22,7 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
     wp user create $WD_USER $WD_USERMAIL \
                    --user_pass=$WD_USER_PASS \
+                   --role=contributor \
                    --allow-root \
                    --path=$PATH_WD
 fi
